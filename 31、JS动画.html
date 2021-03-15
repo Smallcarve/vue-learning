@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app"><!-- 动画生命周期钩子，before-enter，enter，after-enter，before-leave，leave，after-leave -->
+			<transition name="demo" @before-enter="handleBeforeEnter" @enter="handleEnter" @，after-enter，="handleAfterEnter">
+				<div v-if="show">hello world</div>
+			</transition>
+			<button type="button" @click="handleClick">toggle</button>
+		</div>
+		<script type="text/javascript">
+			var app = new Vue({
+				el: '#app',
+				data: {
+					show: true
+				},
+				methods: {
+					handleClick () {
+						this.show = !this.show;
+					},
+					handleBeforeEnter (el) {
+						el.style.color = '#FF0000';
+					},
+					handleEnter (el, done) {
+						setTimeout(() => {
+							el.style.color = '#87CEEB';
+						}, 2000);
+						setTimeout(() => {
+							done();
+						}, 4000);
+					},
+					handleAfterEnter (el) {
+						el.style.color = '#000000';
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

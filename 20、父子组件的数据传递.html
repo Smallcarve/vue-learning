@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<counter :count="count" @change="handleChange"></counter>
+			<counter :count="count" @change="handleChange"></counter>
+			<div>{{total}}</div>
+		</div>
+		<script type="text/javascript">
+			"use strict"
+			var counter = {
+				props: ['count'],
+				data () {
+					return{
+						number: this.count//VUE中的单向数据流不允许子组件修改父组件传递的参数，因此需要克隆
+					}
+				},
+				template: '<div @click="handleClick">{{number}}</div>',
+				methods: {
+					handleClick () {
+						this.number++;
+						this.$emit('change', 1);
+					}
+				}
+			}
+			var app = new Vue({
+				el: '#app',
+				data: {
+					count: 0,
+					total: 0
+				},
+				components: {
+					counter: counter
+				},
+				methods: {
+					handleChange (step)  {
+						this.total += step;
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app1">
+			<div v-if="seen">你能看见我了</div>
+			<button v-on:click="hide" type="button">隐藏/显示</button>
+		</div>
+		<div id="app2">
+			<div v-show="seen">你能看见我了</div>
+			<button v-on:click="hide" type="button">隐藏/显示</button>
+		</div>
+		<div id="app3">
+			<div v-if='seen==="A"'>A</div>
+			<div v-else-if='seen==="B"'>B</div>
+			<div v-else-if='seen==="C"'>C</div>
+			<div v-else>D</div>
+			<button v-on:click="A" type="button">A</button>
+			<button v-on:click="B" type="button">B</button>
+			<button v-on:click="C" type="button">C</button>
+			<button v-on:click="D" type="button">D</button>
+		</div>
+		<script type="text/javascript">
+			//v-if
+			var app1 = new Vue({
+				el: '#app1',
+				data:{
+					seen: true
+				},
+				methods: {
+					hide: function(){
+						this.seen = !this.seen
+					}
+				}
+			})
+			//v-show，不支持模板和v-else
+			var app2 = new Vue({
+				el: '#app2',
+				data:{
+					seen: true
+				},
+				methods: {
+					hide: function(){
+						this.seen = !this.seen
+					}
+				}
+			})
+			//v-else-if
+			var app3 = new Vue({
+				el: '#app3',
+				data:{
+					seen: "A"
+				},
+				methods: {
+					A: function(){
+						this.seen = 'A'
+					},
+					B: function(){
+						this.seen = 'B'
+					},
+					C: function(){
+						this.seen = 'C'
+					},
+					D: function(){
+						this.seen = 'D'
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

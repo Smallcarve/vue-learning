@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>TodoList</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html{
+				width: 100%;
+				height: 100%;
+			}
+			body{
+				width: 100%;
+				height: 100%;
+			}
+			input{
+				margin-top: 80px;
+				width: 200px;
+				height: 40px;
+				font-size: 24px;
+				float: left;
+			}
+			input:hover{
+				border-color: #FF0000;
+			}
+			button{
+				margin-top: 80px;
+				width: 50px;
+				height: 44px;
+				float: left;
+				background-color: #FFFFFF;
+				cursor: pointer;
+			}
+			li{
+				margin-left: 20px;
+				cursor: pointer;
+			}
+			p{
+				font-size: 10px;
+			}
+			.inpute{
+				width: 254px;
+				height: 44px;
+				position: absolute;
+				top: 0;
+				left: 50%;
+				margin-left: -125px;
+			}
+			#app{
+				width: 100%;
+				height: 100%;
+				font-size: 20px;
+				background-color: #87CEEB;
+				color: #38404C;
+			}
+			#app div{
+				min-height: 30%;
+				overflow: hidden;				
+			}
+			#app div:first-of-type{
+				min-height: 150px;
+				text-align: center;
+			}
+			#app div:nth-child(2){
+				padding: 20px;
+				background-color: #87CEEB;
+			}
+			#app div:nth-child(3){
+				padding: 20px;
+				background-color: #87CEEB;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div>
+				<h1>TodoList</h1>
+				<hr >
+				<p>(点击以完成您的待办事件)</p>
+				<div class="inpute">
+					<input type="text" v-model="inputValue">
+					<button @click="handleIn">提交</button>
+				</div>
+			</div>
+			<div>
+				<h2>正在进行</h2>
+				<hr >
+				<ul>
+					<todo-item v-for="(item, index) in items" :item="item" :key="index" @finish="handleFinish"></todo-item>
+				</ul>
+			</div>
+			<div>
+				<h2>已完成</h2>
+				<hr >
+				<ul>
+					<fin-item v-for="(item, index) in finisheds" :item="item" :key="index" @delete="handleDelete"></fin-item>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript">
+			Vue.component('todo-item', {
+				props:['item', 'index'],
+				template: '<li title="点击完成" @click="handleFinish">{{item}}</li>',
+				methods: {
+					handleFinish: function () {
+						this.$emit('finish', this.index);
+					}
+				}
+			})
+			Vue.component('fin-item', {
+				props:['item', 'index'],
+				template: '<li title="点击删除" @click="handleDelete">{{item}}</li>',
+				methods: {
+					handleDelete: function () {
+						this.$emit('delete', this.index)
+					}
+				}
+			})
+			var app = new Vue({
+				el: '#app',
+				data: {
+					inputValue: '',
+					items: [],
+					finisheds: []
+				},
+				methods: {
+					handleIn: function () {
+						if (this.inputValue) {
+							this.items.push(this.inputValue);
+							this.inputValue = '';
+						} else{
+							alert('内容不能为空!');
+						}
+					},
+					handleFinish: function (index) {
+						var fin = this.items.splice(index, 1).toString();
+						this.finisheds.push(fin);
+					},
+					handleDelete: function (index) {
+						this.finisheds.splice(index, 1)
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

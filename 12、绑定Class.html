@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app1" :class="{active: isActive}">
+			<button type="button" @click="handleClick">改变样式</button>
+		</div>
+		<div id="app2" :class="classObject">
+			<button type="button" @click="handleClick">改变样式</button>
+		</div>
+		<div id="app3" :class="classObject">
+			<button type="button" @click="handleClick1">改变样式</button>
+			<button type="button" @click="handleClick2">改变样式</button>
+		</div>
+		<div id="app4" :class="[{active: isActive}, isError]">
+			<button type="button" @click="handleClick">改变样式</button>
+		</div>
+		<div id="app5">
+			<class-div :class="{active: isActive}" @changeclass="handleClick"></class-div>			
+		</div>
+		<script type="text/javascript">
+			//内联模板
+			var app1 = new Vue({
+				el: '#app1',
+				data: {
+					isActive: false
+				},
+				methods: {
+					handleClick: function() {
+						this.isActive = !this.isActive
+					}
+				}
+			})
+			//非内联模板
+			var app2 = new Vue({
+				el: '#app2',
+				data: {
+					classObject: {
+						active: false
+					}
+				},
+				methods: {
+					handleClick: function() {
+						this.classObject.active = !this.classObject.active
+					}
+				}
+			})
+			//通过计算属性绑定Class
+			var app3 = new Vue({
+				el: '#app3',
+				data: {
+					isActive: false,
+					isError: false
+				},
+				computed: {
+					classObject: function() {
+						return {
+							active: this.isActive && !this.isError,
+							errorClass: this.isError && !this.isActive
+						}
+					}
+				},
+				methods: {
+					handleClick1: function() {
+						this.isActive = !this.isActive
+					},
+					handleClick2: function() {
+						this.isError = !this.isError
+					}
+				}
+			})
+			//通过数组绑定Class
+			var app4 = new Vue({
+				el: '#app4',
+				data: {
+					isActive: false,
+					isError: 'errorClass'
+				},
+				methods: {
+					handleClick: function() {
+						this.isActive = !this.isActive
+					}
+				}
+			})
+			//Class与组件
+			Vue.component('class-div', {
+				template: '<div class="errorClass"><button type="button" @click="handleClick">改变样式</button></div>',
+				methods: {
+					handleClick: function() {
+						this.$emit('changeclass')
+					}
+				}
+			})
+			var app5 = new Vue({
+				el: '#app5',
+				data: {
+					isActive: false
+				},
+				methods: {
+					handleClick: function() {
+						this.isActive = !this.isActive
+					}
+				}
+			})
+		</script>
+	</body>
+	<style type="text/css">
+		div{
+			background-color: #38404C;
+			width: 300px;
+			height: 300px;
+			margin: auto;
+			padding: 0px;
+			text-align: center;
+			line-height: 300px;
+			float: left;
+		}
+		.errorClass{
+			background-color: #FF0000;
+		}
+		.active{
+			background-color: #00FFFF;
+		}
+	</style>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./velocity.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<transition name="demo" @before-enter="handleBeforeEnter" @enter="handleEnter" @after-enter="handleAfterEnter">
+				<div v-if="show">hello world</div>
+			</transition>
+			<button type="button" @click="handleClick">toggle</button>
+		</div>
+		<script type="text/javascript">
+			var app = new Vue({
+				el: '#app',
+				data: {
+					show: true
+				},
+				methods: {
+					handleClick () {
+						this.show = !this.show;
+					},
+					handleBeforeEnter (el) {
+						el.style.opacity = 0;
+					},
+					handleEnter (el, done) {
+						Velocity(el, {opacity: 1}, {duration: 1000, complete: done})
+					},
+					handleAfterEnter (el) {
+						el.style.color = '#FF0000';
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

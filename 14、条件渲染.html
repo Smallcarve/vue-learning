@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app1">
+			<vif-div v-if="seen" :message="msg"></vif-div>
+			<button type="button" @click="handleClick">显示/隐藏</button>
+		</div>
+		<div id="app2">
+			<div v-if="userName">
+				用户名：<input />
+			</div>
+			<div v-else>
+				邮箱：<input />
+			</div>
+			<button type="button" @click="handleClick">切换</button>
+		</div>
+		<div id="app3">
+			<div v-if="userName">
+				用户名：<input key = 'userName' />
+			</div>
+			<div v-else>
+				邮箱：<input key = 'Mail' />
+			</div>
+			<button type="button" @click="handleClick">切换</button>
+		</div>
+		<script type="text/javascript">
+			//v-if与组件
+			Vue.component('vif-div', {
+				props:['message'],
+				template: '<div><p>{{message}}</p><p>{{message}}</p></div>'
+			})
+			var app1 = new Vue({
+				el: '#app1',
+				data: {
+					seen: true,
+					msg: 'hello word!'
+				},
+				methods: {
+					handleClick: function() {
+						this.seen = !this.seen
+					}
+				}
+			})
+			//无Key值的条件渲染
+			var app2 = new Vue({
+				el: '#app2',
+				data: {
+					userName: true 
+				},
+				methods: {
+					handleClick: function() {
+						this.userName = !this.userName
+					}
+				}
+			})
+			//有Key的条件渲染
+			var app3 = new Vue({
+				el: '#app3',
+				data: {
+					userName: true 
+				},
+				methods: {
+					handleClick: function() {
+						this.userName = !this.userName
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

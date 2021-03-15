@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app1">
+			<button @click="say('hi')">hi</button>
+		</div>
+		<script type="text/javascript">
+			//内联调用方法
+			var app1 = new Vue({
+				el: '#app1',
+				methods: {
+					say: function (message) {
+						alert(message)
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

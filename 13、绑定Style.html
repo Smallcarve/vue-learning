@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app1" :style="{color: activeColor, fontSize: fontSize + 'px'}">
+			{{msg}}
+		</div>
+		<div id="app2" :style="styleObject">
+			{{msg}}
+		</div>
+		<div id="app3" :style="[styleObject, anotherObject]">
+			{{msg}}
+		</div>
+		<div id="app4">
+			<style-div :style="styleObject" :message="msg"></style-div>
+		</div>
+		<script type="text/javascript">
+			//内联模板
+			var app1 = new Vue({
+				el: '#app1',
+				data: {
+					activeColor: '#FF0000',
+					fontSize: 20,
+					msg: 'hello word!'
+				}
+			})
+			//非内联模板
+			var app2 = new Vue({
+				el: '#app2',
+				data: {
+					styleObject: {
+						color: '#FF0000',
+						fontSize: '20px'						
+					},
+					msg: 'hello word!'
+				}
+			})
+			//通过数组绑定Style
+			var app3 = new Vue({
+				el: '#app3',
+				data: {
+					styleObject: {
+						color: '#FF0000',
+						fontSize: '20px'						
+					},
+					anotherObject: {
+						backgroundColor: '#00FFFF'
+					},
+					msg: 'hello word!'
+				}
+			})
+			//Style与组件
+			Vue.component('style-div', {
+				props:['message'],
+				template: '<div style="backgroundColor: #00FFFF;">{{message}}</div>'
+			})
+			var app4 = new Vue({
+				el: '#app4',
+				data: {
+					styleObject: {
+						color: '#FF0000',
+						fontSize: '20px'						
+					},
+					msg: 'hello word!'
+				}
+			})
+		</script>
+	</body>
+</html>

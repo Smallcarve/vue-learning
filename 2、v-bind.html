@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<span v-bind:title="date">{{msg}}</span>
+		</div>
+		<script type="text/javascript">
+			//v-bind
+			var app = new Vue({
+				el: '#app',
+				data:{
+					msg: '该页面显示时间',
+					date: '该页面显示与' + new Date().toLocaleString()
+				}
+			})
+		</script>
+	</body>
+</html>

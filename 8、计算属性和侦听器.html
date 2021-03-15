@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			姓：<input v-model="firstName" />
+			名：<input v-model="lastName" />
+			<div>{{fullName}}</div>
+			<div>{{count}}</div>
+		</div>
+		<script type="text/javascript">
+			var app = new Vue({
+				el: '#app',
+				data: {
+					firstName: '',
+					lastName: '',
+					count: 0
+				},
+				computed: { //计算属性
+					fullName: {
+						get: function() {
+							return this.firstName + ' ' + this.lastName
+						},
+						set: function(fullName) {
+							var arr = fullName.split(" ");
+							this.firstName = arr[0];
+							this.lastName = arr[1];
+						}
+					}
+				},
+				watch: { //侦听器
+					fullName: function() {
+						this.count++
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
